@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Grid Demo</title>
+        <meta name="description" content="">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        
+        <link href="Content/bootstrap.min.css" rel="stylesheet" />
+        <link href="Content/bootstrap-responsive.min.css" rel="stylesheet" />
+        <link href="Content/main.css" rel="stylesheet" />
+        <script src="Scripts/jquery-2.0.0.min.js"></script>
+        <script src="Scripts/knockout-2.2.1.js"></script>
+        <script src="Scripts/amplify.min.js"></script>
+    </head>
+    <body>
+        <div class="container">            
+            <table class="table table-bordered table-hover table-striped span8" id="usersView">
+                <thead>
+                    <tr>
+                        <th>
+                            Username
+                        </th>
+                        <th>
+                            First Name
+                        </th>
+                        <th>
+                            Last Name
+                        </th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: Users">
+                    <tr>
+                        <td data-bind="text: Username"></td>
+                        <td data-bind="text: FirstName"></td>
+                        <td data-bind="text: LastName"></td>
+                    </tr>
+                </tbody>
+            </table>              
+            <div class="well span3" id="createView">
+                <label for="Username">Username</label>
+                <input type="text" name="Username" data-bind="value: UserModel.Username" class="input-block-level"/>
+                <label for="FirstName">First Name</label>
+                <input type="text" name="FirstName" data-bind="value: UserModel.FirstName" class="input-block-level"/>
+                <label for="LastName">Last Name</label>
+                <input type="text" name="LastName" data-bind="value: UserModel.LastName" class="input-block-level"/>
+                <button class="btn-success pull-right" data-bind="click: CreateUser">Create User</button>
+            </div>
+            <p style="text-align: center">
+                Questions or comments hit me up on twitter <a href="http://www.twitter.com/csharpyoudull" target="_blank">@CSharpYouDull</a>.
+                <br/><span class="muted">-steve</span>
+            </p>    
+        </div>
+
+        <script src="Scripts/app/UserModel.js"></script>
+        <script src="Scripts/app/UserRepository.js"></script>
+        <script src="Scripts/app/UsersViewModel.js"></script>
+        <script src="Scripts/app/CreateUserViewModel.js"></script>
+        <script src="Scripts/app/main.js"></script>
+    </body>
+</html>
