@@ -9,7 +9,7 @@ namespace MessageGrid
 {
     public static class UserRepository
     {
-        private static int _idCounter = 0;
+        private static int _idCounter;
 
         private static List<User> Users { get; set; }
 
