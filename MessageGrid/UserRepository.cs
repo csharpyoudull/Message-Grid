@@ -26,19 +26,24 @@ namespace MessageGrid
                 throw new Exception("Username already in use, to clear user repository stop web server.");
             }
 
-            user.Id = GetId();
+            user.UserId = GetId();
             Users.Add(user);
-            return user.Id;
+            return user.UserId;
         }
 
         public static bool DeleteUser(int userId)
         {
-            var user = Users.FirstOrDefault(usr => usr.Id.Equals(userId));
+            var user = Users.FirstOrDefault(usr => usr.UserId.Equals(userId));
             if (user == null)
                 return false;
 
             Users.Remove(user);
             return true;
+        }
+
+        public static List<User> GetUsers()
+        {
+            return Users;
         }
 
         private static int GetId()

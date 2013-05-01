@@ -11,6 +11,8 @@ namespace MessageGrid.api
     {
         public UsersApi() : base("/api")
         {
+            Get["/users/users.json"] = GetUsers;
+
             Post["/users/user.json"] = CreateUser;
 
             Delete["/users/{id}"] = DeleteUser;
@@ -45,8 +47,19 @@ namespace MessageGrid.api
             }
             catch
             {
-                //you should really do something here but for this demo just returning a 500.
                 return new TextResponse(HttpStatusCode.InternalServerError,"Error attempting to delete user.");
+            }
+        }
+
+        private Response GetUsers(dynamic pars)
+        {
+            try
+            {
+                return JsonConvert.SerializeObject(UserRepository.GetUsers());
+            }
+            catch (Exception)
+            {
+                return new TextResponse(HttpStatusCode.InternalServerError, "Error attempting to get users.");
             }
         }
     }

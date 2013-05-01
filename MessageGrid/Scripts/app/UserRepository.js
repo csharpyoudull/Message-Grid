@@ -13,7 +13,7 @@
                 }
             }
         }).success(function (data) {
-            user.Id(data);
+            user.UserId(data);
             amplify.publish(AppConstants().USER_CREATED_CHANNEL, user);
         });
     };
@@ -26,6 +26,17 @@
             amplify.publish(AppConstants().USER_DELETED_CHANNEL, userId);
         }).fail(function() {
             alert("Run! There was an error attempting to delete the user.");
+        });
+    };
+    self.GetUsers = function() {
+        $.getJSON('/api/users/users.json').success(function (data) {
+            var users = [];
+            $(data).each(function (i, usr) {
+                users.push(new User(usr.Username, usr.FirstName, usr.LastName, usr.UserId));
+            });
+            amplify.publish(AppConstants().USERS_LOADED_CHANNEL, users);
+        }).fail(function() {
+            alert("There was an error loading users.");
         });
     };
     return self;
