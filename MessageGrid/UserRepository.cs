@@ -31,6 +31,16 @@ namespace MessageGrid
             return user.Id;
         }
 
+        public static bool DeleteUser(int userId)
+        {
+            var user = Users.FirstOrDefault(usr => usr.Id.Equals(userId));
+            if (user == null)
+                return false;
+
+            Users.Remove(user);
+            return true;
+        }
+
         private static int GetId()
         {
             return Interlocked.Increment(ref _idCounter);

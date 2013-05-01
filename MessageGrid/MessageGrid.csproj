@@ -80,6 +80,7 @@
     <None Include="Scripts\amplify-vsdoc.js" />
     <Content Include="Scripts\amplify.js" />
     <Content Include="Scripts\amplify.min.js" />
+    <Content Include="Scripts\app\Constants.js" />
     <Content Include="Scripts\app\CreateUserViewModel.js" />
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\app\UserModel.js" />
@@ -92,6 +93,9 @@
     <Content Include="Scripts\jquery-2.0.0.min.js" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
+    <None Include="Scripts\linq-vsdoc.js" />
+    <Content Include="Scripts\linq.js" />
+    <Content Include="Scripts\linq.min.js" />
     <Content Include="Scripts\MIT-LICENSE.txt" />
     <Content Include="Scripts\README.txt" />
     <Content Include="Web.config" />

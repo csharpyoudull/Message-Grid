@@ -12,6 +12,7 @@
         <script src="Scripts/jquery-2.0.0.min.js"></script>
         <script src="Scripts/knockout-2.2.1.js"></script>
         <script src="Scripts/amplify.min.js"></script>
+        <script src="Scripts/linq.min.js"></script>
     </head>
     <body>
         <div class="container">            
@@ -30,6 +31,7 @@
                         <th>
                             Last Name
                         </th>
+                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody data-bind="foreach: Users">
@@ -38,6 +40,9 @@
                         <td data-bind="text: Username"></td>
                         <td data-bind="text: FirstName"></td>
                         <td data-bind="text: LastName"></td>
+                        <td style="padding: 2px; text-align: center;">                            
+                            <button class="btn btn-danger" data-bind="click: Delete"><i class="icon-trash"></i></button>
+                        </td>
                     </tr>
                 </tbody>
             </table>              
@@ -55,7 +60,7 @@
                 <br/><span class="muted">-steve</span>
             </p>    
         </div>
-
+        <script src="Scripts/app/Constants.js"></script>
         <script src="Scripts/app/UserModel.js"></script>
         <script src="Scripts/app/UserRepository.js"></script>
         <script src="Scripts/app/UsersViewModel.js"></script>

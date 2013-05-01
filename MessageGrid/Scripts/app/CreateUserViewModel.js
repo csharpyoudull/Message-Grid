@@ -7,7 +7,6 @@
         self.UserModel.Username('');
         self.UserModel.FirstName('');
         self.UserModel.LastName('');
-
     };
     return self;
 }
