@@ -3,20 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using MessageGrid.Hubs;
 using MessageGrid.Models;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Infrastructure;
+using Newtonsoft.Json;
 
 namespace MessageGrid
 {
     public static class UserRepository
     {
+        private enum ChangeType
+        {
+            Create = 1,
+            Delete = 2,
+        }
+
         private static int _idCounter;
 
         private static List<User> Users { get; set; }
+
+        private static IPersistentConnectionContext PersistentUserConnection { get; set; } 
 
         static UserRepository()
         {
             _idCounter = 0;
             Users = new List<User>();
+
+            PersistentUserConnection = GlobalHost.ConnectionManager.GetConnectionContext<UsersHub>();
         }
 
         public static int CreateUser(User user)
@@ -28,6 +42,7 @@ namespace MessageGrid
 
             user.UserId = GetId();
             Users.Add(user);
+            PublishChanges(ChangeType.Create, user);
             return user.UserId;
         }
 
@@ -38,6 +53,7 @@ namespace MessageGrid
                 return false;
 
             Users.Remove(user);
+            PublishChanges(ChangeType.Delete, userId);
             return true;
         }
 
@@ -49,6 +65,13 @@ namespace MessageGrid
         private static int GetId()
         {
             return Interlocked.Increment(ref _idCounter);
+        }
+
+        private static void PublishChanges(ChangeType type, object change)
+        {
+            var notify = new {ChangeType = (int) type, Data = change};
+            var json = JsonConvert.SerializeObject(notify);
+            PersistentUserConnection.Connection.Broadcast(json);
         }
     }
 }

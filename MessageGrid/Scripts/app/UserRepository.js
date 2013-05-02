@@ -13,17 +13,17 @@
                 }
             }
         }).success(function (data) {
-            user.UserId(data);
-            amplify.publish(AppConstants().USER_CREATED_CHANNEL, user);
+            //possibly hide loading icons, data update will arrive from signal.
+            //data field contains user id, if reqired for other functions.
         });
     };
-    self.DeleteUser = function(userId) {
+    self.DeleteUser = function (userId) {
         $.ajax({
             type: 'DELETE',
             url: '/api/users/' + userId,
             contentType: 'application/json'
         }).success(function () {
-            amplify.publish(AppConstants().USER_DELETED_CHANNEL, userId);
+            //possibly hide loading icons, data update will arrive from signal.
         }).fail(function() {
             alert("Run! There was an error attempting to delete the user.");
         });
@@ -38,6 +38,26 @@
         }).fail(function() {
             alert("There was an error loading users.");
         });
+    };
+    self.ListenForChanges = function() {
+        var con = $.connection('/userhub');
+        con.received(function(data) {
+            self.ProcessChanges(data);
+        });
+        
+        con.start();
+    };
+    self.ProcessChanges = function (data) {
+        var change = $.parseJSON(data);
+        switch (change.ChangeType) {
+            case 1:
+                var user = new User(change.Data.Username, change.Data.FirstName, change.Data.LastName, change.Data.UserId);
+                amplify.publish(AppConstants().USER_CREATED_CHANNEL, user);
+                break;
+            case 2:
+                amplify.publish(AppConstants().USER_DELETED_CHANNEL, change.Data);
+                break;
+        }
     };
     return self;
 };
