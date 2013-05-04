@@ -27,15 +27,28 @@ namespace MessageGrid
 
         static UserRepository()
         {
-            _idCounter = 0;
-            Users = new List<User>();
+            _idCounter = 1;
+
+            //Create user colelction and add a default user
+            Users = new List<User>
+                        {
+                            new User
+                                {
+                                    UserId = 1,
+                                    UserName = "admin",
+                                    Password = "admin",
+                                    FirstName = "admin",
+                                    LastName = "admin"
+                                }
+                        };
+            
 
             PersistentUserConnection = GlobalHost.ConnectionManager.GetConnectionContext<UsersHub>();
         }
 
         public static int CreateUser(User user)
         {
-            if (Users.Any(u => u.Username.Equals(user.Username, StringComparison.OrdinalIgnoreCase)))
+            if (Users.Any(u => u.UserName.Equals(user.UserName, StringComparison.OrdinalIgnoreCase)))
             {
                 throw new Exception("Username already in use, to clear user repository stop web server.");
             }

@@ -1,9 +1,9 @@
-﻿function CreateUserViewModel() {
+﻿function LoginViewModel() {
     var self = this;
     self.UserModel = new User();
-    self.CreateUser = function () {
-        var repo = new UserRepository();
-        repo.CreateUser(self.UserModel);
+    self.Login = function () {
+        var repo = new MembershipRepository();
+        repo.Login(self.UserModel);
         self.UserModel.UserName('');
         self.UserModel.FirstName('');
         self.UserModel.LastName('');

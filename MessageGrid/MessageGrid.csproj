@@ -102,7 +102,10 @@
     <Content Include="Scripts\amplify.min.js" />
     <Content Include="Scripts\app\Constants.js" />
     <Content Include="Scripts\app\CreateUserViewModel.js" />
+    <Content Include="Scripts\app\LoginViewModel.js" />
     <Content Include="Scripts\app\main.js" />
+    <Content Include="Scripts\app\MembershipRepository.js" />
+    <Content Include="Scripts\app\Navigation.js" />
     <Content Include="Scripts\app\UserModel.js" />
     <Content Include="Scripts\app\UserRepository.js" />
     <Content Include="Scripts\app\UsersViewModel.js" />
@@ -120,10 +123,15 @@
     <Content Include="Scripts\linq.min.js" />
     <Content Include="Scripts\MIT-LICENSE.txt" />
     <Content Include="Scripts\README.txt" />
+    <Content Include="Scripts\sammy-0.7.4.js" />
+    <Content Include="Scripts\sammy-0.7.4.min.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-2.0.0.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\BaseApi.cs" />
+    <Compile Include="Api\MembershipApi.cs" />
+    <Compile Include="Api\SecureBaseApi.cs" />
     <Compile Include="Api\UsersApi.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

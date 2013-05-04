@@ -14,48 +14,63 @@
         <script src="Scripts/amplify.min.js"></script>
         <script src="Scripts/linq.min.js"></script>
         <script src="Scripts/jquery.signalR-1.0.1.min.js"></script>
+        <script src="Scripts/sammy-0.7.4.min.js"></script>
     </head>
     <body>
-        <div class="container">            
-            <table class="table table-bordered table-hover table-striped span8" id="usersView">
-                <thead>
-                    <tr>
-                        <th>
-                            Id
-                        </th>
-                        <th>
-                            Username
-                        </th>
-                        <th>
-                            First Name
-                        </th>
-                        <th>
-                            Last Name
-                        </th>
-                        <th>Options</th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: Users">
-                    <tr>
-                        <td data-bind="text: UserId"></td>
-                        <td data-bind="text: Username"></td>
-                        <td data-bind="text: FirstName"></td>
-                        <td data-bind="text: LastName"></td>
-                        <td style="padding: 2px; text-align: center;">                            
-                            <button class="btn btn-danger" data-bind="click: Delete"><i class="icon-trash"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>              
-            <div class="well span3" id="createView">
-                <label for="Username">Username</label>
-                <input type="text" name="Username" data-bind="value: UserModel.Username" class="input-block-level"/>
-                <label for="FirstName">First Name</label>
-                <input type="text" name="FirstName" data-bind="value: UserModel.FirstName" class="input-block-level"/>
-                <label for="LastName">Last Name</label>
-                <input type="text" name="LastName" data-bind="value: UserModel.LastName" class="input-block-level"/>
-                <button class="btn-success pull-right" data-bind="click: CreateUser">Create User</button>
-            </div>
+        <div class="container" id="content">            
+            <section class="view" id="usersView">                
+                <table class="table table-bordered table-hover table-striped span8" id="usersGrid">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Username
+                            </th>
+                            <th>
+                                First Name
+                            </th>
+                            <th>
+                                Last Name
+                            </th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: Users">
+                        <tr>
+                            <td data-bind="text: UserId"></td>
+                            <td data-bind="text: UserName"></td>
+                            <td data-bind="text: FirstName"></td>
+                            <td data-bind="text: LastName"></td>
+                            <td style="padding: 2px; text-align: center;">                            
+                                <button class="btn btn-danger" data-bind="click: Delete"><i class="icon-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>              
+                <div class="well span3" id="createView">
+                    <label for="Username">Username</label>
+                    <input type="text" name="Username" data-bind="value: UserModel.UserName" class="input-block-level"/>
+                    <label for="FirstName">First Name</label>
+                    <input type="text" name="FirstName" data-bind="value: UserModel.FirstName" class="input-block-level"/>
+                    <label for="LastName">Last Name</label>
+                    <input type="text" name="LastName" data-bind="value: UserModel.LastName" class="input-block-level"/>
+                    <label for="password">Password</label>
+                    <input type="text" name="password" data-bind="value: UserModel.Password" class="input-block-level"/>
+                    <button class="btn-success pull-right" data-bind="click: CreateUser">Create User</button>
+                </div>
+            </section>
+            <section class="view" id="loginView">
+                <div class="well span3">
+                    <label for="Username">Username</label>
+                    <input type="text" name="Username" data-bind="value: UserModel.UserName" class="input-block-level"/>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" data-bind="value: UserModel.Password" class="input-block-level"/>
+                    <button class="btn-success pull-right" data-bind="click: Login">Login</button>
+                </div>
+            </section>
+            <br style="clear:both;"/>
             <p style="text-align: center">
                 Questions or comments hit me up on twitter <a href="http://www.twitter.com/csharpyoudull" target="_blank">@CSharpYouDull</a>.
                 <br/><span class="muted">-steve</span>
@@ -66,6 +81,9 @@
         <script src="Scripts/app/UserRepository.js"></script>
         <script src="Scripts/app/UsersViewModel.js"></script>
         <script src="Scripts/app/CreateUserViewModel.js"></script>
+        <script src="Scripts/app/MembershipRepository.js"></script>
+        <script src="Scripts/app/LoginViewModel.js"></script>
+        <script src="Scripts/app/Navigation.js"></script>
         <script src="Scripts/app/main.js"></script>
     </body>
 </html>

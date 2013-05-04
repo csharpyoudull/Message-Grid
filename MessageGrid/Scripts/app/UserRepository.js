@@ -1,7 +1,6 @@
 ﻿function UserRepository() {
     var self = this;
-    self.CreateUser = function (username, firstname, lastname) {
-        var user = new User(username, firstname, lastname);
+    self.CreateUser = function (user) {
         $.ajax({
             type: 'POST',
             url: '/api/users/user.json',
@@ -32,7 +31,7 @@
         $.getJSON('/api/users/users.json').success(function (data) {
             var users = [];
             $(data).each(function (i, usr) {
-                users.push(new User(usr.Username, usr.FirstName, usr.LastName, usr.UserId));
+                users.push(new User(usr.UserName, usr.FirstName, usr.LastName, usr.UserId));
             });
             amplify.publish(AppConstants().USERS_LOADED_CHANNEL, users);
         }).fail(function() {
@@ -51,7 +50,7 @@
         var change = $.parseJSON(data);
         switch (change.ChangeType) {
             case 1:
-                var user = new User(change.Data.Username, change.Data.FirstName, change.Data.LastName, change.Data.UserId);
+                var user = new User(change.Data.UserName, change.Data.FirstName, change.Data.LastName, change.Data.UserId);
                 amplify.publish(AppConstants().USER_CREATED_CHANNEL, user);
                 break;
             case 2:
