@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using MessageGrid.Api;
 using MessageGrid.Models;
 using Nancy;
 using Nancy.Responses;
@@ -7,9 +8,9 @@ using Newtonsoft.Json;
 
 namespace MessageGrid.api
 {
-    public class UsersApi:NancyModule
+    public class UsersApi:SecureBaseApi 
     {
-        public UsersApi() : base("/api")
+        public UsersApi()
         {
             Get["/users/users.json"] = GetUsers;
 

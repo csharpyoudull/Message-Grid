@@ -38,16 +38,17 @@ namespace MessageGrid.Api
                 if (found)
                 {
                     var ticket = new FormsAuthenticationTicket(1, user.UserName, DateTime.Now,
-                                                               DateTime.Now.Add(new TimeSpan(0, 0, 20, 0)), false, null);
+                                                               DateTime.Now.Add(new TimeSpan(0, 0, 20, 0)), false, user.UserId.ToString());
                     var encryptedTicket = FormsAuthentication.Encrypt(ticket);
 
                     var cookie = FormsAuthentication.GetAuthCookie(user.UserName, false);
                     cookie.Value = encryptedTicket;
+                    var response =  new Response {StatusCode = HttpStatusCode.Accepted};
+                    response.AddCookie(cookie.Name, cookie.Value);
+                    return response;
                 }
 
-                return found
-                        ? new Response {StatusCode = HttpStatusCode.Accepted}
-                        : new Response {StatusCode = HttpStatusCode.NotFound};
+                return new Response {StatusCode = HttpStatusCode.NotFound};
             }
             catch (Exception ex)
             {
