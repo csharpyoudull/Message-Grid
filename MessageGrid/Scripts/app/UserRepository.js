@@ -28,12 +28,13 @@
         });
     };
     self.GetUsers = function() {
-        $.getJSON('/api/users/users.json').success(function (data) {
+        $.getJSON('/api/users/users.json').success(function(data) {
             var users = [];
-            $(data).each(function (i, usr) {
+            $(data).each(function(i, usr) {
                 users.push(new User(usr.UserName, usr.FirstName, usr.LastName, usr.UserId));
             });
-            amplify.publish(AppConstants().USERS_LOADED_CHANNEL, users);
+            var note = { Change: { Data: users, ChangeType: 3 } };
+            amplify.publish(AppConstants().USER_NOTIFICATION_CHANNEL, note);
         }).fail(function() {
             alert("There was an error loading users.");
         });
@@ -48,15 +49,7 @@
     };
     self.ProcessChanges = function (data) {
         var change = $.parseJSON(data);
-        switch (change.ChangeType) {
-            case 1:
-                var user = new User(change.Data.UserName, change.Data.FirstName, change.Data.LastName, change.Data.UserId);
-                amplify.publish(AppConstants().USER_CREATED_CHANNEL, user);
-                break;
-            case 2:
-                amplify.publish(AppConstants().USER_DELETED_CHANNEL, change.Data);
-                break;
-        }
+        amplify.publish(AppConstants().USER_NOTIFICATION_CHANNEL, change);        
     };
     return self;
 };

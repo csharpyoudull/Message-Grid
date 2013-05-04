@@ -27,7 +27,7 @@ namespace MessageGrid.api
                 var user = JsonConvert.DeserializeObject<User>(reader.ReadToEnd());
                 try
                 {
-                    var result = UserRepository.CreateUser(user);
+                    var result = UserRepository.CreateUser(user,CurrentUser.UserName);
                     return new TextResponse(HttpStatusCode.Accepted, result.ToString());
                 }
                 catch (Exception ex)
@@ -43,7 +43,7 @@ namespace MessageGrid.api
         {
             try
             {
-                var result = UserRepository.DeleteUser(pars.id);
+                var result = UserRepository.DeleteUser(pars.id,CurrentUser.UserName);
                 return result ? new TextResponse(HttpStatusCode.Accepted,"User deleted.") : new TextResponse(HttpStatusCode.NotFound,"User not found.");
             }
             catch

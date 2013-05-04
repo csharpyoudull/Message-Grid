@@ -46,7 +46,7 @@ namespace MessageGrid
             PersistentUserConnection = GlobalHost.ConnectionManager.GetConnectionContext<UsersHub>();
         }
 
-        public static int CreateUser(User user)
+        public static int CreateUser(User user, string changedBy)
         {
             if (Users.Any(u => u.UserName.Equals(user.UserName, StringComparison.OrdinalIgnoreCase)))
             {
@@ -55,18 +55,18 @@ namespace MessageGrid
 
             user.UserId = GetId();
             Users.Add(user);
-            PublishChanges(ChangeType.Create, user);
+            PublishChanges(ChangeType.Create,changedBy, user);
             return user.UserId;
         }
 
-        public static bool DeleteUser(int userId)
+        public static bool DeleteUser(int userId, string changedBy)
         {
             var user = Users.FirstOrDefault(usr => usr.UserId.Equals(userId));
             if (user == null)
                 return false;
 
             Users.Remove(user);
-            PublishChanges(ChangeType.Delete, userId);
+            PublishChanges(ChangeType.Delete,changedBy, user.UserName);
             return true;
         }
 
@@ -80,9 +80,9 @@ namespace MessageGrid
             return Interlocked.Increment(ref _idCounter);
         }
 
-        private static void PublishChanges(ChangeType type, object change)
+        private static void PublishChanges(ChangeType type,string changedBy, object change)
         {
-            var notify = new {ChangeType = (int) type, Data = change};
+            var notify = new {ChangedBy = changedBy, Change = new {ChangeType = (int) type, Data = change}};
             var json = JsonConvert.SerializeObject(notify);
             PersistentUserConnection.Connection.Broadcast(json);
         }
